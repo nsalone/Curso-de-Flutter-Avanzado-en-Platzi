@@ -1,48 +1,63 @@
 import 'package:flutter/material.dart';
 
-// ignore: must_be_immutable
 class ButtonGreen extends StatefulWidget {
+
   final String text;
   double width = 0.0;
   double height = 0.0;
   final VoidCallback onPressed;
 
-  ButtonGreen(
-      {Key key,
-      @required this.text,
-      @required this.onPressed,
-      this.height,
-      this.width});
+  ButtonGreen({Key key, @required this.text, @required this.onPressed, this.height, this.width});
 
   @override
-  _ButtonGreenState createState() => _ButtonGreenState();
+  State createState() {
+    return _ButtonGreen();
+  }
 }
 
-class _ButtonGreenState extends State<ButtonGreen> {
+class _ButtonGreen extends State<ButtonGreen>{
   @override
   Widget build(BuildContext context) {
+    // TODO: implement build
     return InkWell(
       onTap: widget.onPressed,
       child: Container(
-        margin: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
-        height: widget.height,
+        margin: EdgeInsets.only(
+            top: 30.0,
+            left: 20.0,
+            right: 20.0
+        ),
         width: widget.width,
+        height: widget.height,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30.0),
+            borderRadius: BorderRadius.circular(10.0),
             gradient: LinearGradient(
                 colors: [
-                  Colors.red,
-                  Colors.yellow,
+                  Color(0xFFa7ff84),//arriba
+                  Color(0xFF1cbb78)//bajo
                 ],
                 begin: FractionalOffset(0.2, 0.0),
                 end: FractionalOffset(1.0, 0.6),
-                tileMode: TileMode.clamp)),
+                stops: [0.0, 0.6],
+                tileMode: TileMode.clamp
+
+            )
+
+        ),
+
         child: Center(
-            child: Text(
-          widget.text,
-          style: TextStyle(
-              fontSize: 18.0, fontFamily: "Lato", color: Colors.white),
-        )),
+          child: Text(
+            widget.text,
+            style: TextStyle(
+                fontSize: 18.0,
+                fontFamily: "Lato",
+                color: Colors.white,
+                fontWeight: FontWeight.bold
+            ),
+
+          ),
+        ),
+
       ),
     );
   }
