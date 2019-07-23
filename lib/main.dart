@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:platzi_trips_app/User/bloc/bloc_user.dart';
 import 'package:platzi_trips_app/User/ui/screens/sign_in_screen.dart';
+import 'package:platzi_trips_app/widgets/gradient_back.dart';
+
+import 'Place/ui/widgets/card_image.dart';
+import 'Place/ui/widgets/card_image_list.dart';
+import 'Place/ui/widgets/review.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,11 +16,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        child: MaterialApp(
-          title: 'Flutter Demo',
-          //home: PlatziTripsCupertino(),
-          home: SignInScreen(),
-        ),
+        child: SilverBar(),
+//        MaterialApp(
+//          title: 'Flutter Demo',
+//          //home: PlatziTripsCupertino(),
+//          home: SignInScreen(),
+//        ),
         bloc: UserBloc());
   }
 }
@@ -101,6 +107,64 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+class SilverBar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final title = 'Floating App Bar';
+
+    return MaterialApp(
+      title: title,
+      home: Scaffold(
+        // No appbar provided to the Scaffold, only a body with a
+        // CustomScrollView.
+
+        body: Stack(
+          children: <Widget>[
+            GradientBack(
+              height: null,
+            ),
+            CustomScrollView(
+              slivers: <Widget>[
+                // Add the app bar to the CustomScrollView.
+                SliverAppBar(
+                  title: Text(
+                    "Esto es una barra de titulos",
+                    style: TextStyle(
+                        color: Colors.black,
+                        backgroundColor: Colors.transparent),
+                  ),
+                  backgroundColor: Colors.transparent,
+                  expandedHeight: 350.0,
+                  floating: false,
+                  pinned: false,
+                  snap: false,
+                  flexibleSpace: Stack(
+                    children: <Widget>[
+                      FlexibleSpaceBar(background: CardImageList())
+                    ],
+                  ),
+                ),
+                // Next, create a SliverList
+                SliverList(
+                  // Use a delegate to build items as they're scrolled on screen.
+                  delegate: SliverChildBuilderDelegate(
+                    // The builder function returns a ListTile with a title that
+                    // displays the index of the current item.
+                    (context, index) => Review("assets/img/people.jpg",
+                        "Paolo Guerrero", "1 review · 5 photos", "No hay wifi"),
+                    // Builds 1000 ListTiles
+                    childCount: 100,
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
     );
   }
 }

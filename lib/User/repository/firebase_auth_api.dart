@@ -2,19 +2,22 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class FirebaseAuthAPI {
-
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
   Future<FirebaseUser> signIn() async {
     GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
+    print("Google Sign: $googleSignInAccount");
+
     GoogleSignInAuthentication gSA = await googleSignInAccount.authentication;
+    print("GSA $gSA");
 
     FirebaseUser user = await _auth.signInWithCredential(
-        GoogleAuthProvider.getCredential(idToken: gSA.idToken, accessToken: gSA.accessToken));
+        GoogleAuthProvider.getCredential(
+            idToken: gSA.idToken, accessToken: gSA.accessToken));
+    print("USER ${user.toString()}");
 
     return user;
-
   }
 
   signOut() async {
@@ -22,5 +25,4 @@ class FirebaseAuthAPI {
     googleSignIn.signOut();
     print("Sesiones cerradas");
   }
-
 }
